@@ -17,6 +17,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Class that houses the different methods to handle the actions of the users once the Add button
+ * is clicked on the Part TableView
+ */
 public class AddPart implements Initializable {
 
     public Button addPartCancel;
@@ -50,6 +54,12 @@ public class AddPart implements Initializable {
      *
      *
      * @param event - User clicks the save button
+     * @throws IOException
+     * LOGIC ERROR
+     * Encountered a logic error where the user was allowed to input an inventory amount that was less than
+     * the allowed minimum inventory amount.
+     * Implemented a comparison check for the two values that presented the user with an error message if they
+     * incorrectly entered an inventory value that was less than the allowed minimum inventory value.
      */
 
     public void handleSave(ActionEvent event) throws IOException {

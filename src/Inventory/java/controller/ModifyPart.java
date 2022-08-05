@@ -145,6 +145,7 @@ public class ModifyPart implements Initializable {
     /**
      * Returns the user to the main screen
      * @param event - The user is returned to the main menu
+     * @throws IOException
      */
     public void returnToMainMenu(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));

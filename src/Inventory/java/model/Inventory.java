@@ -40,6 +40,13 @@ public class Inventory {
      *
      * @param partName used to search through allParts for a matching part name
      * @return Part object with the matching part name or an empty list if no item is found
+     * <p>
+     * LOGIC ERROR:
+     * Experienced an issue when the user searched for a part without proper casing to match the part's name
+     * in the inventory. No results would be returned because the part began with a capital letter and the user failed
+     * to input a capital letter in their search term.
+     * Implemented toLowerCase from the String library that removes all casing from both the part name and the user's
+     * input so that input validation and character matching could occur more fluidly.</p>
      */
     public static ObservableList<Part> lookUpPart(String partName) {
         ObservableList<Part> partResults = FXCollections.observableArrayList();
@@ -110,7 +117,8 @@ public class Inventory {
      *
      * @param productId is the Id being searched through the allProducts list to find the product
      * @return the product once found or null if it cannot be found
-     */
+     *
+    */
     public static Product lookUpProduct(int productId){
         for(Product product: allProducts){
             if(product.getId() == productId){
@@ -124,6 +132,13 @@ public class Inventory {
      *
      * @param productName specifies the name to search for in the allProducts list
      * @return the list of products that match the searched name. The list will be empty if no products were found.
+     * <p>
+     * LOGIC ERROR
+     * Experienced an issue when the user searched for a product without proper casing to match the product's name
+     * in the inventory. No results would be returned because the product began with a capital letter and the user failed
+     * to input a capital letter in their search term.
+     * Implemented toLowerCase from the String library that removes all casing from both the product name and the user's
+     * input so that input validation and character matching could occur more fluidly. </p>
      */
     public static ObservableList<Product> lookUpProduct(String productName){
         ObservableList<Product> prodResults = FXCollections.observableArrayList();

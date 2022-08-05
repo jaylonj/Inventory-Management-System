@@ -20,7 +20,10 @@ import javafx.stage.Stage;
 
 import model.*;
 
-
+/**
+ * Class that houses the different methods to handle the actions of the users once the Add button
+ * is clicked on the Product TableView
+ */
 public class AddProduct implements Initializable {
 
     public TextField addProdName;
@@ -81,6 +84,7 @@ public class AddProduct implements Initializable {
     /**
      * Returns the user to the main screen
      * @param event - The user is returned to the main menu
+     * @throws IOException
      */
     public void returnToMainMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
@@ -144,32 +148,62 @@ public class AddProduct implements Initializable {
      */
     public void handleAddProdAdd(ActionEvent event) {
         Part selection = addProdPartsTable.getSelectionModel().getSelectedItem();
-        currAssocParts.add(selection);
+        if(selection != null)
+            currAssocParts.add(selection);
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Empty Selection");
+            alert.setContentText("You have not selected a part to add!");
+            alert.showAndWait();
+        }
     }
 
     /**
      * Takes the item that the user requests to remove, asks them if they are sure
      * they have selected the right item, and then removes the item.
      * @param event - Remove is clicked
+     *<p>
+     *             RUNTIME ERROR:
+     * Encountered a NullPointerException error when I allowed the program to accept an item as null if the user
+     * failed to select an item. The program attempted to retrieve the name of the item and that is where the error
+     * occurred.
+     * Implemented a try-catch block to circumvent this and check the user's selection, presenting them
+     * with an error message if they had not selected an item.
+     *              </p>
      */
     public void handleAddProdRemove(ActionEvent event){
         Part item = addProdAssocPartsTable.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("WARNING");
-        alert.setHeaderText("Part Removal Confirmation");
-        alert.setContentText("Are you sure you want to remove " + item.getName() + "?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if(result.isPresent() && result.get() == ButtonType.OK){
-            currAssocParts.remove(item);
+        try {
+            if (item == null)
+                throw new Exception();
+            else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("WARNING");
+                alert.setHeaderText("Part Removal Confirmation");
+                alert.setContentText("Are you sure you want to remove " + item.getName() + "?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    currAssocParts.remove(item);
+                }
+            }
+        }
+        catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Empty Selection");
+            alert.setContentText("You have not selected a part to remove!");
+            alert.showAndWait();
         }
     }
 
     /**
-     * First, the method deselects any items. Then, part to search for is taken from the user's
+     * <p>First, the method deselects any items. Then, part to search for is taken from the user's
      * input and a list is created of the search results. If the results list is empty,
      * then an idSearch is executed. If that search returns empty, an error message is shown.
-     * Otherwise, the resulting list is set to the TableView.
+     * Otherwise, the resulting list is set to the TableView.</p>
      * @param event - The user searches for a part
+     *
      */
     public void handleAddProdSearch(ActionEvent event){
         addProdPartsTable.getSelectionModel().clearSelection();

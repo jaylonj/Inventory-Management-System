@@ -68,7 +68,7 @@
                                   </columns>
                           </TableView>
                           <Button id="prodAddButton" layoutX="276.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleAddProdAdd" text="Add"/>
-                          <Button id="prodRemoveButton" fx:id="addProdRemoveButton" layoutX="184.0" mnemonicParsing="false"
+                          <Button id="prodRemoveButton" fx:id="addProdRemoveButton" layoutX="143.0" layoutY="362.0" mnemonicParsing="false"
                                   onAction="#handleAddProdRemove" text="Remove Associated Part"/>
                           <Button id="prodSaveButton" fx:id="addProdSaveButton" layoutX="205.0" layoutY="392.0"
                                   mnemonicParsing="false" onAction="#handleAddProdSave" text="Save"/>
