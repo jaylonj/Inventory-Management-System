@@ -103,6 +103,10 @@ public class AddProduct implements Initializable {
      * </p>
      * @param event - The save button is clicked
      * @throws IOException
+     * <p>
+     *     LOGIC ERROR: Experienced logic errors with the inventory, min and max values. Implemented if and else if
+     *     statements to properly check those inputs to prevent any errors.
+     * </p>
      */
     public void handleAddProdSave(ActionEvent event) throws IOException {
         try {
@@ -117,7 +121,22 @@ public class AddProduct implements Initializable {
                 alert.setHeaderText("Inventory Issue");
                 alert.setContentText("Maximum MUST be GREATER than minimum!");
                 alert.showAndWait();
-            } else {
+            }
+            else if (max < stock) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("Inventory Issue");
+                alert.setContentText("Product inventory is higher than the maximum allowed. Please check your inputs.");
+                alert.showAndWait();
+            }
+            else if (min > stock) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("Inventory Issue");
+                alert.setContentText("Product inventory is lower than the minimum allowed. Please check your inputs.");
+                alert.showAndWait();
+            }
+            else {
                 int id = Inventory.getAllProducts().size() + Inventory.productIdGenerator.addAndGet(3) + 1000;
                 Product newProduct = new Product(id, name, price, stock, min, max);
                 Inventory.addProduct(newProduct);

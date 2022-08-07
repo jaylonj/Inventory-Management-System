@@ -55,11 +55,10 @@ public class AddPart implements Initializable {
      *
      * @param event - User clicks the save button
      * @throws IOException
-     * LOGIC ERROR
-     * Encountered a logic error where the user was allowed to input an inventory amount that was less than
-     * the allowed minimum inventory amount.
-     * Implemented a comparison check for the two values that presented the user with an error message if they
-     * incorrectly entered an inventory value that was less than the allowed minimum inventory value.
+     * <p>
+     * LOGIC ERROR: Experienced logic errors with the inventory, min and max values. Implemented if and else if
+     * statements to properly check those inputs to prevent any errors.
+     * </p>
      */
 
     public void handleSave(ActionEvent event) throws IOException {
@@ -79,9 +78,14 @@ public class AddPart implements Initializable {
                 alert.setContentText("Maximum MUST be GREATER than minimum!");
                 alert.showAndWait();
             }
-            // Compares the values of the minimum inventory amount and the current inventory amount
-            // to ensure there is a sufficient part inventory in stock
-            else if (stock < min){
+            else if (max < stock) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("Inventory Issue");
+                alert.setContentText("Part inventory is higher than the maximum allowed. Please check your inputs.");
+                alert.showAndWait();
+            }
+            else if (min > stock) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("ERROR");
                 alert.setHeaderText("Inventory Issue");

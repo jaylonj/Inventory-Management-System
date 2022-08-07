@@ -20,7 +20,9 @@ import model.Inventory;
 import model.Part;
 import model.Product;
 
-
+/**
+ * Class that launches the application
+ */
 
 public class Main implements Initializable {
 

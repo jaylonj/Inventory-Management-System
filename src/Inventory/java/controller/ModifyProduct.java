@@ -18,7 +18,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-
+/**
+ * Class that houses the different methods to handle the actions of the users once the Modify button
+ * is clicked on the Product TableView
+ */
 public class ModifyProduct implements Initializable {
     public TableView<Part> modProdPartsTable;
     public TableColumn<Part, Integer> modProdIDCol;
@@ -99,6 +102,10 @@ public class ModifyProduct implements Initializable {
      * In-House and Outsourced are then checked to ensure that the part is correctly attributed to either field.
      * @param event - Clicking on the Save button
      * @throws IOException
+     * <p>
+     * LOGIC ERROR: Experienced logic errors with the inventory, min and max values. Implemented if and else if
+     * statements to properly check those inputs to prevent any errors.
+     * </p>
      */
     public void handleModProdSave(ActionEvent event) throws IOException {
         try {
@@ -112,6 +119,20 @@ public class ModifyProduct implements Initializable {
                 alert.setTitle("ERROR");
                 alert.setHeaderText("Inventory Issue");
                 alert.setContentText("Maximum MUST be GREATER than minimum!");
+                alert.showAndWait();
+            }
+            else if (max < stock) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("Inventory Issue");
+                alert.setContentText("Product inventory is higher than the maximum allowed. Please check your inputs.");
+                alert.showAndWait();
+            }
+            else if (min > stock) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("Inventory Issue");
+                alert.setContentText("Product inventory is lower than the minimum allowed. Please check your inputs.");
                 alert.showAndWait();
             }
             else{

@@ -15,6 +15,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Class that houses the different methods to handle the actions of the users once the Modify button
+ * is clicked on the Part TableView
+ */
+
 public class ModifyPart implements Initializable {
     public RadioButton modPartInHouseButton;
     public RadioButton modPartOutsourcedButton;
@@ -84,6 +89,10 @@ public class ModifyPart implements Initializable {
      * In-House and Outsourced are then checked to ensure that the part is correctly attributed to either field.
      * @param event - Clicking on the Save button
      * @throws IOException
+     * <p>
+     * LOGIC ERROR: Experienced logic errors with the inventory, min and max values. Implemented if and else if
+     * statements to properly check those inputs to prevent any errors.
+     * </p>
      */
     public void handleModPartSave(ActionEvent event) throws IOException {
         try {
@@ -99,7 +108,22 @@ public class ModifyPart implements Initializable {
                 alert.setHeaderText("Inventory Issue");
                 alert.setContentText("Maximum MUST be GREATER than minimum!");
                 alert.showAndWait();
-            } else {
+            }
+            else if (max < stock) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("Inventory Issue");
+                alert.setContentText("Part inventory is higher than the maximum allowed. Please check your inputs.");
+                alert.showAndWait();
+            }
+            else if (min > stock) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("Inventory Issue");
+                alert.setContentText("Part inventory is lower than the minimum allowed. Please check your inputs.");
+                alert.showAndWait();
+            }
+            else {
                 if (modPartOutsourcedButton.isSelected() && currentPart instanceof InHouse) {
                     String company = modPartToggle.getText();
                     currentPart = new Outsourced(id, name, price, stock, min, max, company);
